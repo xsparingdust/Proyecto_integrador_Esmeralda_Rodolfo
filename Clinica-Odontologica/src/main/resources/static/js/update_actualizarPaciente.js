@@ -1,36 +1,56 @@
-function clearForm() {
-    document.querySelector('#update_paciente_form').reset();
-    document.getElementById('div_paciente_updating').style.display = "none";
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('update_paciente_form');
 
-function loadPacientes() {
-    const url = '/pacientes';
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const tableBody = document.getElementById('pacienteTableBody');
-            tableBody.innerHTML = '';
-            data.forEach(paciente => {
-                const pacienteRow = document.createElement('tr');
-                pacienteRow.id = `tr_${paciente.id}`;
-                pacienteRow.innerHTML = `
-                        <td>${paciente.id}</td>
-                        <td>${paciente.nombre}</td>
-                        <td>${paciente.apellido}</td>
-                        <td>${paciente.cedula}</td>
-                        <td>${paciente.fechaIngreso}</td>
-                        <td>${paciente.domicilio.calle}</td>
-                        <td>${paciente.domicilio.numero}</td>
-                        <td>${paciente.domicilio.localidad}</td>
-                        <td>${paciente.domicilio.provincia}</td>
-                        <td>${paciente.email}</td>
-                        <td>
-                            <button type="button" class="btn btn-danger" onclick="deleteBy(${paciente.id})">&times;</button>
-                            <button type="button" class="btn btn-info btn_id" onclick="findBy(${paciente.id})">${paciente.id}</button>
-                        </td>
-                    `;
-                tableBody.appendChild(pacienteRow);
-            });
-        })
-        .catch(error => console.error('Error al cargar los pacientes:', error));
-}
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar que el formulario se envíe
+
+            const id = document.getElementById('paciente_id').value;
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+            const cedula = document.getElementById('cedula').value;
+            const fechaIngreso = document.getElementById('fechaIngreso').value;
+            const calle = document.getElementById('calle').value;
+            const numero = document.getElementById('numero').value;
+            const localidad = document.getElementById('localidad').value;
+            const provincia = document.getElementById('provincia').value;
+            const email = document.getElementById('email').value;
+
+            const pacienteData = {
+                id: id,
+                nombre: nombre,
+                apellido: apellido,
+                cedula: cedula,
+                fechaIngreso: fechaIngreso,
+                domicilio: {
+                    calle: calle,
+                    numero: numero,
+                    localidad: localidad,
+                    provincia: provincia
+                },
+                email: email
+            };
+
+            fetch(`/pacientes/update`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(pacienteData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Paciente actualizado correctamente');
+                    clearForm(); // Limpia el formulario después de la actualización
+                    loadPacientes(); // Vuelve a cargar la lista de pacientes actualizada
+                } else {
+                    console.error('Error al actualizar el paciente');
+                    response.json().then(data => console.error(data)); // Verifica el mensaje de error específico
+                }
+            })
+            .catch(error => console.error('Error en la solicitud PUT:', error));
+        });
+    } else {
+        console.error('No se encontró el formulario de actualización en el DOM.');
+    }
+});
