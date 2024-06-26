@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Pacientes</title>
+</head>
+<body>
+<h1>Listado de Pacientes</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="paciente : ${pacientes}">
+        <td th:text="${paciente.nombre}"></td>
+        <td th:text="${paciente.apellido}"></td>
+        <td th:text="${paciente.email}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

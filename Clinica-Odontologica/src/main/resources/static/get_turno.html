@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Turnos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/get_turno.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="./index.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pacientes
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="./post_pacientes.html">Guardar</a></li>
+                        <li><a class="dropdown-item" href="./get_pacientes.html">Listar</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="./index.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Odontologos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="./post_odontologos.html">Guardar</a></li>
+                        <li><a class="dropdown-item" href="./get_odontologos.html">Listar</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="./index.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Turnos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="./post_turno.html">Guardar</a></li>
+                        <li><a class="dropdown-item" href="./get_turno.html">Listar</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12" style="background-color:#e6fffa; padding:10px; border-radius:3px">
+            <h3>Listado de Turnos</h3>
+            <table id="turnosTable" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Paciente</th>
+                    <th>Odontólogo</th>
+                    <th>Fecha</th>
+                </tr>
+                </thead>
+                <tbody id="turnosTableBody">
+                <!-- Aquí se agregarán dinámicamente los turnos -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para editar turno -->
+<div class="modal fade" id="editTurnoModal" tabindex="-1" aria-labelledby="editTurnoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTurnoModalLabel">Editar Turno</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="edit_turno_form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editPaciente">Paciente:</label>
+                        <input type="text" class="form-control" id="editPaciente" name="paciente" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editOdontologo">Odontólogo:</label>
+                        <input type="text" class="form-control" id="editOdontologo" name="odontologo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFecha">Fecha:</label>
+                        <input type="datetime-local" class="form-control" id="editFecha" name="fecha" required>
+                    </div>
+                    <input type="hidden" id="editTurnoId" name="id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
